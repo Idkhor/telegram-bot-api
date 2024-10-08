@@ -1,0 +1,23 @@
+def start(update: Update, context: CallbackContext) -> None:
+    update.message.reply_text('Hello! I will report false information.')
+
+def check_message(update: Update, context: CallbackContext) -> None:
+    message = update.message.text
+    # Add logic to identify false information
+    if 'false info' in message.lower():  # Example condition
+        # Code to report the message
+        context.bot.send_message(chat_id='@your_channel', text='Reporting false information!')
+    else:
+        update.message.reply_text('Message is fine!')
+
+def main():
+    updater = Updater("YOUR_TOKEN")
+    dp = updater.dispatcher
+    dp.add_handler(CommandHandler("start", start))
+    dp.add_handler(MessageHandler(Filters.text & ~Filters.command, check_message))
+    updater.start_polling()
+    updater.idle()
+
+if __name__ == '__main__':
+    main()
+```
